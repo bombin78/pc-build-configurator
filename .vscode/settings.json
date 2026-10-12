@@ -3,6 +3,8 @@
 		"authjs",
 		"configurator",
 		"cuid",
+		"healthcheck",
+		"isready",
 		"NEXTAUTH",
 		"nextjs",
 		"opengraph",

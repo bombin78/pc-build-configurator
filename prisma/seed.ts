@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
+import bcrypt from 'bcryptjs';
 import { PrismaClient, ComponentType } from '../lib/generated/prisma/client';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
@@ -455,7 +456,7 @@ async function main() {
     data: {
       email: 'test@test.com',
       name: 'Тестовый Пользователь',
-      password: '123456'
+      password: await bcrypt.hash('12345678', 10)
     }
   });
 

@@ -1,0 +1,30 @@
+# dependencies and build output, recreated inside the image
+node_modules
+.next
+lib/generated
+*.tsbuildinfo
+npm-debug.log
+
+# git
+.git
+.gitignore
+
+# env files, values come from docker-compose.yml
+.env
+.env.*
+
+# docker files
+Dockerfile*
+docker-compose*.yml
+
+# docs and notes
+README.md
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+backlog.md
+notes
+
+# editor and Claude setup
+.claude
+.vscode
