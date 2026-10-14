@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 import {prisma} from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { GENERATED_LOGIN_REGEX } from "@/lib/login";
 
 const MIN_PASSWORD_LENGTH = 8;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export type SignupState = {error?: string};
 
@@ -18,16 +18,13 @@ export async function signupAction(
 	_prevState: SignupState | null,
 	formData: FormData
 ): Promise<SignupState> {
-	const name = getString(formData, 'name');
-	const email = getString(formData, 'email');
+	const login = getString(formData, 'login');
 	const password = getString(formData, 'password');
 
-	if (!email) {
-        return { error: "Введите email"}
-    }
-
-    if(!EMAIL_REGEX.test(email)) {
-        return { error: 'Некорректный формат email' }
+	// Логин создаёт страница регистрации. Проверка формата не даёт
+	// подменить его в запросе на свой, например на имя или email
+	if (!login || !GENERATED_LOGIN_REGEX.test(login)) {
+        return { error: 'Некорректный логин, обновите страницу'}
     }
 
     if(!password || password.length < MIN_PASSWORD_LENGTH) {
@@ -35,19 +32,20 @@ export async function signupAction(
     }
 
 	const existing = await prisma.user.findUnique({
-		where: {email}
+		where: {login}
 	});
 
+	// Страница выдаёт только свободный логин. Сюда попадает запрос,
+	// в котором логин подменили на чужой, или повторная отправка формы
 	if (existing) {
-        return { error: 'Email уже занят'}
+        return { error: 'Этот логин уже занят, обновите страницу'}
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.user.create({
         data: {
-            email,
-            name,
+            login,
             password: hashedPassword
         }
     })

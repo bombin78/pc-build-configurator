@@ -19,7 +19,11 @@ import { Input } from "@/components/ui/input";
 import { useActionState } from "react";
 import { ErrorMessage } from "./error-message";
 
-export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+type Props = React.ComponentProps<typeof Card> & {
+  login: string
+}
+
+export function SignupForm({ login, ...props }: Props) {
   const [state, formAction] = useActionState<SignupState | null, FormData>(signupAction, null);
 
   return (
@@ -27,34 +31,24 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       <CardHeader>
         <CardTitle>Создать аккаунт</CardTitle>
         <CardDescription>
-          Введите свои данные ниже, чтобы создать учетную запись.
+          Придумайте пароль, чтобы создать учетную запись.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="name">Имя</FieldLabel>
-              <Input 
-                id="name" 
-                type="text" 
-                name="name" 
-                placeholder="John Doe" 
-                required 
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="login">Логин</FieldLabel>
               <Input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="m@example.com"
-                required
+                id="login"
+                type="text"
+                name="login"
+                value={login}
+                autoComplete="username"
+                readOnly
               />
               <FieldDescription>
-                Мы будем использовать этот адрес электронной почты для связи с вами. 
-                Мы не будем передавать ваш адрес никому другому.
+                Логин создан автоматически. Сохраните его: восстановить логин нельзя.
               </FieldDescription>
             </Field>
             <Field>
@@ -63,6 +57,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 id="password" 
                 type="password"
                 name="password" 
+                autoComplete="new-password"
                 required 
               />
               <FieldDescription>

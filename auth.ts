@@ -8,12 +8,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     // здесь идет перечисление вариантов аутентификации
     providers: [
-        // у нас будет только один вариант через форму по email и паролю
+        // у нас будет только один вариант через форму по логину и паролю
         Credentials({
             credentials: {
-                email: {
-                    label: 'Email',
-                    type: 'email'
+                login: {
+                    label: 'Логин',
+                    type: 'text'
                 },
                 password: {
                     label: 'Пароль',
@@ -21,7 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 }
             },
             async authorize(credentials) {
-                if (!credentials?.email || typeof credentials.email !== 'string') {
+                if (!credentials?.login || typeof credentials.login !== 'string') {
                     return null;
                 }
 
@@ -30,7 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 }
 
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email }
+                    where: { login: credentials.login }
                 })
     
                 if (!user?.password) {
@@ -45,8 +45,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
                 return {
                     id: user.id,
-                    email: user.email,
-                    name: user.name
+                    login: user.login
                 };
             },
         })
@@ -62,8 +61,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         jwt({ token, user}) {
             if (user) {
                 token.id = user.id;
-                token.email = user.email;
-                token.name = user.name;
+                token.login = user.login;
             }
 
             return token;
@@ -72,8 +70,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session({ session, token}) {
             if (session.user) {
                 session.user.id = token.id;
-                session.user.email = token.email;
-                session.user.name = token.name;
+                session.user.login = token.login;
             }
 
             return session;

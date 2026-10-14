@@ -5,7 +5,7 @@ export async function getMyBuilds(userId: string) {
         where: { userId },
         orderBy: { createdAt: 'desc'},
         include: {
-            user: { select: { email: true }},
+            user: { select: { login: true }},
             components: {
                 include: {
                     component: { 
@@ -22,7 +22,7 @@ export async function getPublicBuild(userId: string) {
         where: { isPublic: true },
         orderBy: { createdAt: 'desc'},
         include: {
-            user: { select: { email: true, name: true }},
+            user: { select: { login: true }},
             components: {
                 include: {
                     component: { 

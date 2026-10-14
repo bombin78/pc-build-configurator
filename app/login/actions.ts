@@ -9,23 +9,23 @@ export async function loginAction(
     _prevState: LoginState | null,
     formData: FormData
 ): Promise<LoginState> {
-    const email = String(formData.get('email')).trim();
+    const login = String(formData.get('login')).trim();
     const password = String(formData.get('password')).trim();
 
-    if(!email || !password) {
-        return { error: 'Введите email или пароль'};
+    if(!login || !password) {
+        return { error: 'Введите логин и пароль'};
     }
 
     try {
         return await signIn('credentials', {
-            email,
+            login,
             password,
             redirectTo: "/dashboard"
         });
     } catch (error) {
         if (error instanceof AuthError) {
             if (error.type === 'CredentialsSignin') {
-                return { error: 'Неверный email или пароль'};
+                return { error: 'Неверный логин или пароль'};
             }
 
             return { error: 'Ошибка авторизации'};

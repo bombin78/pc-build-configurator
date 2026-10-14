@@ -7,7 +7,7 @@ import Link from "next/link";
 
 type BuildCard = {
     user: {
-        email: string;
+        login: string;
     };
     id: string;
     name: string;
@@ -38,7 +38,7 @@ export function BuildCard({
                         <TypographyH3>{build.name}</TypographyH3>
                     </CardTitle>
                     <p className="text-xs text-muted-foreground mt-1">
-                        Создал: { build.user?.email?.trim()}
+                        Создал: { build.user?.login}
                     </p>
                 </div>
                 <div className="shrink-0">

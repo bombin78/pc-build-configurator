@@ -10,3 +10,7 @@ export const componentCategories: ComponentCategory[] = [
     {id: 'case', name: 'Корпус', icon: 'Box'},
     {id: 'cooling', name: 'Охлаждение', icon: 'Fan'},
 ]
+
+// Тестовый аккаунт: его создаёт prisma/seed.ts, а форма входа показывает
+// логин и пароль всем посетителям. При изменении поправьте и prisma/seed.ts
+export const TEST_USER = { login: 'test', password: '12345678' };

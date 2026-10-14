@@ -450,12 +450,13 @@ async function main() {
     ]
   });
 
-  // Создаем тестового пользователя
+  // Создаем тестового пользователя. Те же логин и пароль показывает форма
+  // входа (TEST_USER в lib/constants.ts). Импортировать их нельзя: в Docker-образ
+  // из папки lib попадает только lib/generated
   console.log('Добавляем тестового пользователя...')
   await prisma.user.create({
     data: {
-      email: 'test@test.com',
-      name: 'Тестовый Пользователь',
+      login: 'test',
       password: await bcrypt.hash('12345678', 10)
     }
   });
