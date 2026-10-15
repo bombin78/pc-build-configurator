@@ -1,0 +1,12 @@
+services:
+  app:
+    image: ghcr.io/bombin78/pc-build-configurator:${APP_TAG:?set APP_TAG in .env}
+    networks:
+      default:
+      web:
+        aliases:
+          - ${APP_ALIAS:?set APP_ALIAS in .env}
+
+networks:
+  web:
+    external: true
