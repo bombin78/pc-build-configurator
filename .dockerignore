@@ -16,6 +16,7 @@ npm-debug.log
 # docker files
 Dockerfile*
 docker-compose*.yml
+.github
 
 # docs and notes
 README.md

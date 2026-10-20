@@ -1,6 +1,8 @@
 {
 	"cSpell.words": [
 		"authjs",
+		"bombin",
+		"buildx",
 		"configurator",
 		"cuid",
 		"fkey",
@@ -10,6 +12,7 @@
 		"nextjs",
 		"opengraph",
 		"pkey",
+		"typegen",
 		"vercel",
 		"мемоизация",
 		"отрисовке",
