@@ -29,8 +29,9 @@ export function AddComponentDialogContent({
              })
     }, [categoryId])
 
+    // 56rem - ширина max-w-4xl. min() оставляет по 1rem по бокам.
     return (
-        <DialogContent className="max-w-4xl w-[190vw] max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogContent className="sm:max-w-[min(56rem,calc(100%-2rem))] max-h-[85vh] overflow-hidden flex flex-col">
             <DialogHeader>
                 <DialogTitle>Добавить компонент - {categoryName}</DialogTitle>
             </DialogHeader>
