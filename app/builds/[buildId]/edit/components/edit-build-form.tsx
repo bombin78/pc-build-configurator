@@ -7,7 +7,7 @@ import { TableParts } from "@/components/build-editor/table";
 import { Button } from "@/components/ui/button";
 import { TypographyH3 } from "@/components/ui/typography-h3";
 import { componentCategories } from "@/lib/constants";
-import { Component, dbTypeToCategoryId } from "@/lib/types";
+import { Component, dbTypeToCategoryId, SelectedByCategory } from "@/lib/types";
 import { updateBuildAction } from "@/lib/actions/builds";
 
 type BuildComponentInput = {
@@ -26,8 +26,8 @@ type Props = {
 
 function buildInitialSelected(
     buildComponents: BuildComponentInput[],
-): Record<string, Component | null> {
-    const selected: Record<string, Component | null> = {};
+): SelectedByCategory {
+    const selected: SelectedByCategory = {};
 
     for (const component of buildComponents) {
         const categoryId = dbTypeToCategoryId[component.type];
@@ -55,7 +55,7 @@ export function EditBuildForm({
         return buildInitialSelected(buildComponents)
     }, [buildComponents]);
 
-    const [selectedByCategory, setSelectedByCategory] = useState<Record<string, Component | null>>(initialSelected);
+    const [selectedByCategory, setSelectedByCategory] = useState<SelectedByCategory>(initialSelected);
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
 
     const onSelectedComponent = useCallback(
@@ -69,7 +69,7 @@ export function EditBuildForm({
 
     return (
         <>
-            <div className="flex justify-between mb-8">
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
                 <TypographyH3>
                     Редактирование сборки - { buildName }
                 </TypographyH3>

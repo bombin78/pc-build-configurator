@@ -14,6 +14,12 @@ export type Component = {
 
 export type ComponentType = 'cpu' | 'gpu' | 'ram' | 'ssd' | 'motherboard' | 'psu' | 'case' | 'cooler'
 
+// Выбранные компоненты по id категории. Partial — потому что ключа категории
+// может не быть совсем: конструктор начинает с пустого объекта {}, и до первого
+// выбора selectedByCategory[id] возвращает undefined. null — категорию явно
+// оставили пустой.
+export type SelectedByCategory = Partial<Record<string, Component | null>>
+
 // Маппинг категорий: перевод id категории в тип компонента в базе
 export const categoryIdToDbType: Record<string, ComponentType> = {
     cpu: 'cpu',

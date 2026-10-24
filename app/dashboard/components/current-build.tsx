@@ -3,14 +3,14 @@
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TypographyH1 } from "@/components/ui/typography-h1";
-import type { Component } from "@/lib/types";
+import type { Component, SelectedByCategory } from "@/lib/types";
 import { componentCategories } from "@/lib/constants";
 import { TableParts } from "@/components/build-editor/table";
 import { SaveBuildDialog } from "@/components/build-editor/save-build-dialog";
 import { createBuildAction } from "@/lib/actions/builds";
 
 export const CurrentBuild = () => {
-    const [selectedByCategory, setSelectedByCategory] = useState<Record<string, Component | null>>({});
+    const [selectedByCategory, setSelectedByCategory] = useState<SelectedByCategory>({});
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
 
     const onSelectComponent = useCallback((categoryId: string, component: Component | null) => {
@@ -20,7 +20,7 @@ export const CurrentBuild = () => {
 
     return (
         <>
-            <div className="flex justify-between mb-8">
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
                 <TypographyH1>Собери свою сборку</TypographyH1>
                 {/* Кнопка открывающая модальное окно "Сохранить сборку" */}
                 <Button onClick={() => setSaveDialogOpen(true)}>Собрать</Button>

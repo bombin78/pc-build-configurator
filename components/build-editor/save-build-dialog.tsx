@@ -1,6 +1,6 @@
 'use client'
 
-import { Component } from "@/lib/types";
+import { Component, SelectedByCategory } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useMemo, useRef } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -12,7 +12,7 @@ import { SaveBuildBtn } from "@/components/build-editor/save-build-btn";
 type Props = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    selectedByCategory: Record<string, Component | null>;
+    selectedByCategory: SelectedByCategory;
     defaultName?: string;
     redirectPath?: string;
     action: (
@@ -37,7 +37,7 @@ export function SaveBuildDialog({
 
     const componentIds = useMemo(() => Object
         .values(selectedByCategory)
-        .filter((component): component is Component => component !== null)
+        .filter((component): component is Component => component !== null && component !== undefined)
         .map((component) => component.id)
     ,[selectedByCategory]);
 
