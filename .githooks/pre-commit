@@ -1,0 +1,8 @@
+#!/bin/sh
+# Refuses commits on main: changes reach main only through a pull request.
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [ "$branch" = "main" ]; then
+    echo "Commit to main is not allowed. Create a branch first:" >&2
+    echo "  git switch -c feature/<name>" >&2
+    exit 1
+fi
