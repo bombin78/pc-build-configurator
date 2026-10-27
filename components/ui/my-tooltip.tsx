@@ -34,7 +34,7 @@ function TooltipContent({
         ref={ref}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 rounded-md bg-black px-3 py-1.5 text-xs text-white",
+          "z-50 rounded-md bg-foreground px-3 py-1.5 text-xs text-background",
           "data-[state=delayed-open]:animate-in data-[state=closed]:animate-out",
           "data-[state=closed]:fade-out-0 data-[state=delayed-open]:fade-in-0",
           className
@@ -42,7 +42,7 @@ function TooltipContent({
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="fill-black" />
+        <TooltipPrimitive.Arrow className="fill-foreground" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   )

@@ -144,7 +144,7 @@ export const TableParts = memo(function TableParts({
                     <TableRow>
                         <TableCell colSpan={5}>
                             <p className="font-medium">Цена сборки:</p>
-                            <p className="font-large text-gray500">
+                            <p className="font-large text-muted-foreground">
                                 {formatPrice(totalPrice)}
                             </p>
                         </TableCell>
