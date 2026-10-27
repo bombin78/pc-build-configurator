@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Cpu } from "lucide-react";
 import { TypographyH3 } from "./ui/typography-h3";
 import { HeaderNav } from "./header-nav";
+import { ThemeToggle } from "./theme-toggle";
 
 export async function Header() {
     const session = await auth();
@@ -24,6 +25,7 @@ export async function Header() {
             <nav className="min-w-0 flex-1">
                 <HeaderNav session={session}/>
             </nav>
+            <ThemeToggle/>
         </header>
     );
 }

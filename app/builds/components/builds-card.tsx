@@ -65,7 +65,7 @@ export function BuildCard({
             </CardContent>
             <CardFooter className="flex flex-row justify-between gap-2 pt-4 bprder-t">
                 <CardDescription className="flex flex-col justify-between text-sm font-medium tabular-nums">
-                    <span className="text-sky-500 text-lg font-bold">
+                    <span className="text-primary text-lg font-bold">
                         {new Intl.NumberFormat('ru-Ru').format(build.totalPrice)}
                     </span>
 
