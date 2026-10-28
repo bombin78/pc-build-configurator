@@ -7,7 +7,11 @@ export function SaveBuildBtn({disabled}: {disabled: boolean}) {
 	const {pending} = useFormStatus();
 
 	return (
-		<Button type="submit" disabled={disabled || pending }>
+		<Button
+			type="submit"
+			className="h-10 px-5 text-base"
+			disabled={disabled || pending }
+		>
 			{ pending ? 'Сохранение..' : 'Сохранить'}
 		</Button>
 	);

@@ -2,7 +2,8 @@
 
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { TypographyH1 } from "@/components/ui/typography-h1";
+import { PageHeader } from "@/components/page-header";
+import { Plus } from "lucide-react";
 import type { Component, SelectedByCategory } from "@/lib/types";
 import { componentCategories } from "@/lib/constants";
 import { TableParts } from "@/components/build-editor/table";
@@ -18,13 +19,18 @@ export const CurrentBuild = () => {
         setSelectedByCategory(prev => ({...prev, [categoryId]: component}));
     },[]);
 
+    const hasSelected = Object.values(selectedByCategory).some(Boolean);
+
     return (
         <>
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-                <TypographyH1>Собери свою сборку</TypographyH1>
-                {/* Кнопка открывающая модальное окно "Сохранить сборку" */}
-                <Button onClick={() => setSaveDialogOpen(true)}>Собрать</Button>
-            </div>
+            <PageHeader
+                icon={Plus}
+                title="Собери свою сборку"
+                action={
+                    // Кнопка открывающая модальное окно "Сохранить сборку"
+                    <Button className="h-10 px-5 text-base" disabled={!hasSelected} onClick={() => setSaveDialogOpen(true)}>Собрать</Button>
+                }
+            />
             <div className="min-w-0 overflow-x-auto">
                 {/* Таблица выбора компонентов */}
                 <TableParts

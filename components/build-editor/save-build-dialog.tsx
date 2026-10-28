@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import type { SaveBuildFormState } from "@/lib/actions/builds";
 import { SaveBuildBtn } from "@/components/build-editor/save-build-btn";
+import { Save } from "lucide-react";
 
 type Props = {
     open: boolean;
@@ -68,13 +69,19 @@ export function SaveBuildDialog({
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Сохранить сборку</DialogTitle>
+                    <DialogTitle className="flex items-center gap-3 text-lg font-bold tracking-tight">
+                        <span className="flex size-8 shrink-0 items-center justify-center rounded-md border">
+                            <Save className="size-4 stroke-primary"/>
+                        </span>
+                        Сохранить сборку
+                    </DialogTitle>
                     <DialogDescription>Введите название сборки</DialogDescription>
                 </DialogHeader>
 
                 <form ref={formRef} action={formAction} className="space-y-4">
                     <Input
                         name="name"
+                        className="h-10"
                         placeholder="Например: Игровой ПК"
                         defaultValue={defaultName}
                         required

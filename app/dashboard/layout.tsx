@@ -2,7 +2,7 @@ export default function DashboardLayout({
     children
 }: { children: React.ReactNode}) {
     return (
-        <div className="mt-8 w-full px-4 sm:px-6">
+        <div className="w-full px-4 py-8 sm:px-6">
             { children }
         </div>
     )

@@ -66,7 +66,6 @@ export const TableParts = memo(function TableParts({
 
     return (
         <>
-            {/* До md — карточки: пять колонок таблицы не помещаются на телефоне */}
             <div className="flex flex-col gap-3 md:hidden">
                 {
                     components.map(category => {
@@ -77,7 +76,7 @@ export const TableParts = memo(function TableParts({
                             <div key={category.id} className="rounded-lg border p-3">
                                 <div className="flex items-center justify-between gap-2">
                                     <div className="flex min-w-0 items-center gap-2 font-bold">
-                                        <Icon className="h-5 w-5 shrink-0"/>
+                                        <Icon className="h-5 w-5 shrink-0 stroke-primary"/>
                                         <span className="min-w-0">{category.name}</span>
                                         <InfoTooltip>
                                             {category.id}
@@ -95,62 +94,66 @@ export const TableParts = memo(function TableParts({
                         );
                     })
                 }
-                <div className="rounded-lg bg-muted/50 p-3">
+                <div className="flex items-baseline justify-between gap-2 rounded-lg border bg-muted/50 p-3">
                     <p className="font-medium">Цена сборки:</p>
-                    <p className="tabular-nums">{formatPrice(totalPrice)}</p>
+                    <p className="text-2xl font-extrabold tracking-tight tabular-nums">{formatPrice(totalPrice)}</p>
                 </div>
             </div>
 
-            <Table className="hidden md:table">
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className='w-[100px]'>Компонент</TableHead>
-                        <TableHead>Тип</TableHead>
-                        <TableHead>Модель</TableHead>
-                        <TableHead>Цена</TableHead>
-                        <TableHead className='text-right'>Действия</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {
-                        components.map(category => {
-                            const Icon = iconMap[category.icon];
-                            const selected = selectedByCategory[category.id];
+            <div className="hidden overflow-hidden rounded-lg border md:block">
+                <Table className="[&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4">
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className='w-[100px]'>Компонент</TableHead>
+                            <TableHead>Тип</TableHead>
+                            <TableHead>Модель</TableHead>
+                            <TableHead>Цена</TableHead>
+                            <TableHead className='text-right'>Действия</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {
+                            components.map(category => {
+                                const Icon = iconMap[category.icon];
+                                const selected = selectedByCategory[category.id];
 
-                            return (
-                                <TableRow key={category.id} className='my-2'>
-                                    <TableCell>
-                                        <div className="flex items-center">
-                                            <Icon className="h-5 w-5 mr-1"/>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className='font-bold'>
-                                        {category.name}
-                                            <InfoTooltip>
-                                                {category.id}
-                                            </InfoTooltip>
+                                return (
+                                    <TableRow key={category.id} className='my-2'>
+                                        <TableCell>
+                                            <div className="flex items-center">
+                                                <Icon className="h-5 w-5 mr-1 stroke-primary"/>
+                                            </div>
                                         </TableCell>
-                                    <TableCell>{selected?.name ?? '-'}</TableCell>
-                                    <TableCell>{selected?.price ?? '-'}</TableCell>
-                                    <TableCell className='text-right'>
-                                        {renderSelectButton(category.id, selected)}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        })
-                    }
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={5}>
-                            <p className="font-medium">Цена сборки:</p>
-                            <p className="font-large text-muted-foreground">
-                                {formatPrice(totalPrice)}
-                            </p>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
-            </Table>
+                                        <TableCell className='font-bold'>
+                                            {category.name}
+                                                <InfoTooltip>
+                                                    {category.id}
+                                                </InfoTooltip>
+                                            </TableCell>
+                                        <TableCell>{selected?.name ?? '-'}</TableCell>
+                                        <TableCell className="tabular-nums">{selected ? formatPrice(selected.price) : '-'}</TableCell>
+                                        <TableCell className='text-right'>
+                                            {renderSelectButton(category.id, selected)}
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={5}>
+                                <div className="flex items-baseline justify-between gap-4">
+                                    <p className="font-medium">Цена сборки:</p>
+                                    <p className="text-2xl font-extrabold tracking-tight tabular-nums">
+                                        {formatPrice(totalPrice)}
+                                    </p>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </div>
 
             {/* Модальное окно "Добавить компонент - ..." */}
             <Dialog
@@ -163,6 +166,7 @@ export const TableParts = memo(function TableParts({
                             key={openCategory.id}
                             categoryId={openCategory.id}
                             categoryName={openCategory.name}
+                            icon={iconMap[openCategory.icon]}
                             onSelect={
                                 (component) => {
                                     onSelectedComponent(openCategory.id, component);
