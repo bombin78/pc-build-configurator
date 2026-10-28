@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Props = {
@@ -13,23 +14,24 @@ export function ComponentCard({
     onClick
 }: Props) {
     return (
-        <Card>
+        <Card size="sm" className="transition-shadow hover:ring-primary/50">
             <CardHeader className="min-h-0 flex-1 pb-2">
                 <CardTitle className="text-base font-medium leading-tight">{name}</CardTitle>
-                <CardDescription className="text-sm font-medium tabular-nums">
+                <CardDescription className="text-base font-bold text-foreground tabular-nums">
                     { new Intl.NumberFormat('ru-RU').format(price) }
                 </CardDescription>
             </CardHeader>
-            <CardFooter className="pt-0">
+            <CardFooter>
                 <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
                     className="w-full gap-1.5"
                     onClick={onClick}
                 >
+                    <Plus className="h-4 w-4"/>
                     Добавить
                 </Button>
             </CardFooter>
-        </Card> 
+        </Card>
     );
 }

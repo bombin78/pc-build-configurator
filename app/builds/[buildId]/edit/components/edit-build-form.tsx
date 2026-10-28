@@ -5,7 +5,8 @@ import { useCallback, useMemo, useState } from "react";
 import { SaveBuildDialog } from "@/components/build-editor/save-build-dialog";
 import { TableParts } from "@/components/build-editor/table";
 import { Button } from "@/components/ui/button";
-import { TypographyH3 } from "@/components/ui/typography-h3";
+import { PageHeader } from "@/components/page-header";
+import { Pencil } from "lucide-react";
 import { componentCategories } from "@/lib/constants";
 import { Component, dbTypeToCategoryId, SelectedByCategory } from "@/lib/types";
 import { updateBuildAction } from "@/lib/actions/builds";
@@ -69,23 +70,23 @@ export function EditBuildForm({
 
     return (
         <>
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-                <TypographyH3>
-                    Редактирование сборки - { buildName }
-                </TypographyH3>
-                <Button
-                    onClick={() => setSaveDialogOpen(true)}
-                >
-                    Сохранить
-                </Button>
-            </div>
-            <div className="flex-justify-center">
-                <TableParts
-                    components={componentCategories}
-                    selectedByCategory={selectedByCategory}
-                    onSelectedComponent={onSelectedComponent}
-                />
-            </div>
+            <PageHeader
+                icon={Pencil}
+                title={<>Редактирование сборки - { buildName }</>}
+                action={
+                    <Button
+                        className="h-10 px-5 text-base"
+                        onClick={() => setSaveDialogOpen(true)}
+                    >
+                        Сохранить
+                    </Button>
+                }
+            />
+            <TableParts
+                components={componentCategories}
+                selectedByCategory={selectedByCategory}
+                onSelectedComponent={onSelectedComponent}
+            />
             <SaveBuildDialog
                 open={saveDialogOpen}
                 onOpenChange={setSaveDialogOpen}

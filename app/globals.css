@@ -127,4 +127,9 @@
   html {
     @apply font-sans;
   }
+  /* Tailwind v4 оставляет у кнопок обычную стрелку. Рука — как у ссылок, кроме неактивных кнопок */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }

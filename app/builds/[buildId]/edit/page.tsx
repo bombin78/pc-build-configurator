@@ -37,7 +37,7 @@ export default async function EditBuildPage({
     }));
 
     return (
-        <div className="py-6">
+        <div className="py-8">
             <EditBuildForm
                 buildId={build.id}
                 buildName={build.name}
