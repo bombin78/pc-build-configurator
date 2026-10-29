@@ -132,4 +132,15 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  /* Если в системе включено «уменьшить движение», анимации и переходы
+     заканчиваются сразу, а бесконечные (вентиляторы на главной) не крутятся */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
