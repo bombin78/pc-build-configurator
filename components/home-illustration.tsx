@@ -28,10 +28,14 @@ function Fan({ cx, cy, r }: FanProps) {
     return (
         <g transform={`translate(${cx} ${cy})`}>
             <circle r={r} className="stroke-foreground"/>
-            {Array.from({ length: BLADE_COUNT }, (_, i) => (
-                <path key={i} d={blade} transform={`rotate(${(360 / BLADE_COUNT) * i})`} className="stroke-primary"/>
-            ))}
-            <circle r={hub} className="fill-background stroke-primary"/>
+            {/* Вертушка медленно вращается по часовой стрелке, в сторону изгиба
+                лопастей. Центр вращения — начало координат группы, то есть центр обода */}
+            <g className="animate-spin" style={{ animationDuration: "6s" }}>
+                {Array.from({ length: BLADE_COUNT }, (_, i) => (
+                    <path key={i} d={blade} transform={`rotate(${(360 / BLADE_COUNT) * i})`} className="stroke-primary"/>
+                ))}
+                <circle r={hub} className="fill-background stroke-primary"/>
+            </g>
         </g>
     );
 }

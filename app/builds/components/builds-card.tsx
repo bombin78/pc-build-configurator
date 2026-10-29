@@ -1,7 +1,6 @@
 'use client'
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { TypographyH3 } from "@/components/ui/typography-h3";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 
@@ -31,44 +30,41 @@ export function BuildCard({
     children
 }: Props) {
     return (
-        <Card className="flex flex-col">
-            <CardHeader className="pb-2 flex flex-row items-start justify-between gap-2">
-                <div className="min-w-0 flex">
-                    <CardTitle>
-                        <TypographyH3>{build.name}</TypographyH3>
-                    </CardTitle>
-                    <p className="text-xs text-muted-foreground mt-1">
-                        Создал: { build.user?.login}
-                    </p>
-                </div>
-                <div className="shrink-0">
-                    <Button>
-                        <Link href={`/builds/${build.id}/edit`}><Pencil className="h-4 w-4"/></Link>
+        <Card className="flex flex-col transition-shadow hover:ring-primary/50">
+            <CardHeader>
+                <CardTitle className="min-w-0 text-xl font-extrabold tracking-tight wrap-break-word">
+                    {build.name}
+                </CardTitle>
+                <CardDescription className="text-xs">
+                    Создал: { build.user?.login}
+                </CardDescription>
+                <CardAction>
+                    <Button variant="outline" size="icon" aria-label={`Редактировать сборку ${build.name}`} asChild>
+                        <Link href={`/builds/${build.id}/edit`}><Pencil className="h-4 w-4 stroke-primary"/></Link>
                     </Button>
-                </div>
+                </CardAction>
             </CardHeader>
-            <CardContent className="flex-1 pt-0 space-y-1 gap-2">
+            <CardContent className="flex-1">
                 {
-                    build.components.length && (
+                    build.components.length > 0 && (
                         <>
-                            <p className="text-sm font-medium mt-2">Компоненты:</p>
-                            <ul className="text-sm text-muted-foreground list-disc list-inside space-y-0 5">
-                                    {
-                                        build.components.map((item) => (
-                                            <li key={item.id}>{item.component.name}</li>
-                                        ))
-                                    }
+                            <p className="text-sm font-medium">Компоненты:</p>
+                            <ul className="mt-1 space-y-0.5 text-sm text-muted-foreground list-disc list-inside marker:text-primary">
+                                {
+                                    build.components.map((item) => (
+                                        <li key={item.id}>{item.component.name}</li>
+                                    ))
+                                }
                             </ul>
-                       </>
+                        </>
                     )
                 }
             </CardContent>
-            <CardFooter className="flex flex-row justify-between gap-2 pt-4 bprder-t">
-                <CardDescription className="flex flex-col justify-between text-sm font-medium tabular-nums">
-                    <span className="text-primary text-lg font-bold">
+            <CardFooter className="flex flex-wrap items-end justify-between gap-2">
+                <div className="tabular-nums">
+                    <p className="text-2xl font-extrabold tracking-tight">
                         {new Intl.NumberFormat('ru-Ru').format(build.totalPrice)}
-                    </span>
-
+                    </p>
                     {
                         build.createdAt && (
                             <p className="text-xs text-muted-foreground">{
@@ -76,11 +72,10 @@ export function BuildCard({
                             }</p>
                         )
                     }
-
-                    <div className="flex flex-row gap-2">
-                        { children }
-                    </div>
-                </CardDescription>
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                    { children }
+                </div>
             </CardFooter>
         </Card>
     );

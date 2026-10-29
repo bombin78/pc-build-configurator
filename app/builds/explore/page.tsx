@@ -1,11 +1,12 @@
 import { auth } from "@/auth";
-import { TypographyH1 } from "@/components/ui/typography-h1";
 import { getPublicBuild } from "@/lib/builds";
 import { notFound } from "next/navigation";
 import { BuildCard } from "../components/builds-card";
 import { toggleLikeAction } from "../actions";
 import { Button } from "@/components/ui/button";
-import { ThumbsUp } from "lucide-react";
+import { ThumbsUp, Users } from "lucide-react";
+import { PageHeader } from "@/components/page-header";
+import { EmptyBuilds } from "../components/empty-builds";
 
 export default async function ExplorePage() {
     const session = await auth();
@@ -17,12 +18,11 @@ export default async function ExplorePage() {
     const builds = await getPublicBuild(session.user.id);
 
     return (
-        <div className="py-6">
-            <TypographyH1>Публичные сборки</TypographyH1>
-            <br />
+        <div className="py-8">
+            <PageHeader icon={Users} title="Публичные сборки"/>
             {
                 builds.length > 0 ? (
-                    <div className="grid gap-4 lg:grid-cols-3">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {
                             builds.map((build) => {
                                 const isLiked = Array.isArray(build.likes) && build.likes.length > 0;
@@ -37,11 +37,14 @@ export default async function ExplorePage() {
                                                 <input type="hidden" name="buildId" value={build.id}/>
                                                 <Button
                                                     type="submit"
-                                                    variant={isLiked ? 'outline' : 'secondary'}
+                                                    variant="outline"
                                                     size="sm"
+                                                    aria-label={`Нравится: ${build._count.likes}`}
+                                                    aria-pressed={isLiked}
+                                                    className={isLiked ? 'text-primary' : ''}
                                                 >
                                                     <ThumbsUp
-                                                        className={`h-4 w-4 mr-1 ${isLiked ? "fill-current": ''}`}
+                                                        className={`h-4 w-4 stroke-primary ${isLiked ? "fill-primary/20": ''}`}
                                                     />
                                                     {build._count.likes}
                                                 </Button>
@@ -53,7 +56,7 @@ export default async function ExplorePage() {
                         }
                     </div>
                 ) : (
-                    <p className="text-muted-foreground">Нет публичных сборок</p>
+                    <EmptyBuilds icon={Users}>Нет публичных сборок</EmptyBuilds>
                 )
             }
         </div>
